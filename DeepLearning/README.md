@@ -1,4 +1,4 @@
-・ManufactureDeepLearning folder contains oreily book's(ゼロから作るDeep Learning) programs
+・ManufactureDeepLearning folder contains oreily book's(ゼロから作るDeep Learning) programs \n
 -folder's explanation
 -GraphDraw
  -  sigmoid function, tanh function is drew by python
