@@ -4,12 +4,13 @@
  -  sigmoid function, tanh function is drew by python
 
 -LossFuntion
- - loss function is programmed
+ - loss functions are programmed  
+ - For example mean_squard_error, cross_entropy_error function
 
 -NeuralNetwork
  - 3layerNN foloder contains 3LayerNeuralNetwork program
  - MNIST folder contains Handwriting Recognition program by NeuralNetwork
 
 -OutputActivationFuntion
- - Output Activation funtion is programmed 
-
+ - Output Activation funtions are programmed   
+ - For example softmax function
