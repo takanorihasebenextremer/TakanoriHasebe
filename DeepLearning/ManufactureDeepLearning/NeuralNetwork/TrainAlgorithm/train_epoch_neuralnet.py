@@ -71,4 +71,7 @@ if i % iter_per_epoch == 0:
     print("train acc, test acc | "+str(train_acc)+", "+str(test_acc))
 
 print('len(train_loss_list):'+str(len(train_loss_list)))
-pickle.dump(train_loss_list, open('train_loss_list.pkl','wb'), protocol=3 )
+pickle.dump(train_loss_list, open('train_epoch_loss_list.pkl','wb'), protocol=3 )
+pickle.dump(train_acc_list, open('train_acc_list.pkl','wb'), protocol=3 )
+pickle.dump(test_acc_list, open('test_acc_list.pkl','wb'), protocol=3 )
+
