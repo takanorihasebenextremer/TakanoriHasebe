@@ -12,6 +12,8 @@ Created on Thu Dec 22 16:29:58 2016
 
 主に情報検索技術に用いられるプログラムが記述してある
 
+### ATF-IDFのIDFを多数作成する ###
+
 ### TF-IDFにコサイン正規化を実装する ###
 # 結果についての考察
 最終的な結果を, コサイン類似度で正規化してもあまり意味がない
@@ -66,6 +68,38 @@ class IR():
             tf_vocab_list.append(tf_vocab)
         
         return tf_vocab_list
+    
+    # Argumented Term Frequencyを算出する関数
+    def atf(self, sentences):
+        
+        # 最終的な結果を返すリスト
+        atf_vocab_list = list()
+        for i in range(0, len(sentences)):
+        
+            # 文章中の単語の頻度を算出
+            sentence_term_counter = Counter(sentences[i])
+            
+            # 文章中の単語の最大の頻度を算出
+            max_value = max(sentence_term_counter.values())
+            
+            # 文章中の単語の重複しない辞書の作成
+            sentence_term = set(sentences[i])
+            """
+            print('atfの実行')
+            print(sentence_term_counter)
+            print(max_value)
+            print(sentence_term)
+            """
+            # atfの計算
+            # 1つの文章のatfを算出する
+            atf_vocab = {}
+            for w in sentence_term:
+                atf_vocab.update({w : 0.5 + (0.5 * (sentence_term_counter[w] / max_value))})
+                    
+            atf_vocab_list.append(atf_vocab)
+            
+        return atf_vocab_list
+        
     
     #Inverse Document Frequencyを算出する関数
     def idf(self, sentences):
@@ -203,11 +237,51 @@ def ridf(sentences):
     #print(ridf_vocab_list)
     return ridf_vocab_list
     
+'''
+ATF-IDFを算出する関数
+
+入力例
+sentences = [
+    ["肉", "寿司", "ピザ", "ラーメン", "肉"],
+    ["肉","肉","肉","肉"],
+    ["寿司","天麩羅","そば","ラーメン","和食", "中心"],
+    ["スイーツ","野菜","スイーツ","野菜", "交互"]    
+] 
+'''
+def atfidf(sentences):
+    
+    ir = IR()
+    
+    # 最終結果を返すリスト
+    atfidf_vocab_list = list()
+    
+    #sentencesを代入してArgumeted Term Frequencyを算出
+    tf_vocab_list = ir.tf(sentences)
+    
+    #sentencesを代入してinverse document frequencyを算出
+    idf_vocab = ir.idf(sentences)
+    
+    #atfidfの算出
+    atfidf_vocab = {}
+    for i in range(len(sentences)):
+        for j in range(len(sentences[i])):
+            
+            # atfidf_vocab[sentences[i][j]] = idf_vocab[sentences[i][j]] + math.log2(1 - math.exp(-(tf_vocab_list[i][sentences[i][j]]/len(sentences))))
+            atfidf_vocab.update({sentences[i][j] : tf_vocab_list[i][sentences[i][j]]*idf_vocab[sentences[i][j]] })
+            # print(sentences[i][j], ridf_vocab)
+        atfidf_vocab_list.append(atfidf_vocab)
+        atfidf_vocab = {} #初期化
+        
+    return atfidf_vocab_list
     
     
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
